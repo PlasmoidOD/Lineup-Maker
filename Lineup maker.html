@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lineup Maker</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #111;
+      color: #fff;
+    }
+    h1 {
+      margin: 20px 0 10px;
+    }
+    .store, .grid {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: center;
+      padding: 20px;
+    }
+    .store-button, .dropzone {
+      width: 120px;
+      height: 120px;
+      border-radius: 16px;
+      background-color: #222;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .store-button img, .dropzone img {
+      width: 100%;
+      height: 100%;
+      border-radius: 16px;
+      object-fit: cover;
+      pointer-events: none;
+    }
+    .store-button:hover {
+      transform: scale(1.05);
+      cursor: grab;
+    }
+    .dropzone.over {
+      outline: 3px dashed #4caf50;
+    }
+    .dropzone {
+      background-color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h1>Subs</h1>
+  <div class="store">
+    <div class="store-button" draggable="true" data-img="C:\Users\natha\OneDrive\Pictures\orion\Blob.jpeg">
+      <img src="C:\Users\natha\OneDrive\Pictures\orion\Blob.jpeg" alt="Button 1">
+    </div>
+    <div class="store-button" draggable="true" data-img="C:\Users\natha\OneDrive\Pictures\orion\Gluff.jpg">
+      <img src="C:\Users\natha\OneDrive\Pictures\orion\Gluff.jpg" alt="Button 2">
+    </div>
+    <div class="store-button" draggable="true" data-img="C:\Users\natha\OneDrive\Pictures\orion\Pandoid.jpg">
+      <img src="C:\Users\natha\OneDrive\Pictures\orion\Pandoid.jpg" alt="Button 3">
+    </div>
+    <div class="store-button" draggable="true" data-img="C:\Users\natha\OneDrive\Pictures\orion\Plasmoid.jpg">
+      <img src="C:\Users\natha\OneDrive\Pictures\orion\Plasmoid.jpg" alt="Button 4">
+    </div>
+    <div class="store-button" draggable="true" data-img="C:\Users\natha\OneDrive\Pictures\orion\Eye.jpg">
+      <img src="C:\Users\natha\OneDrive\Pictures\orion\Eye.jpg" alt="Button 5">
+    </div>
+  </div>
+
+  <h1> Your Team</h1>
+  <div class="grid">
+  <figure>
+    <div class="dropzone"></div>
+	<figcaption> 1st pressure </figcaption>
+   </figure>
+     <figure>
+    <div class="dropzone"></div>
+	<figcaption> 2nd pressure </figcaption>
+   </figure>
+     <figure>
+    <div class="dropzone"></div>
+	<figcaption> 3rd pressure </figcaption>
+   </figure>
+     <figure>
+    <div class="dropzone"></div>
+	<figcaption> Goalie </figcaption>
+   </figure>
+  </div>
+
+  <script>
+    const storeButtons = document.querySelectorAll('.store-button');
+    const dropzones = document.querySelectorAll('.dropzone');
+
+    storeButtons.forEach(btn => {
+      btn.addEventListener('dragstart', e => {
+        e.dataTransfer.setData('text/plain', btn.dataset.img);
+      });
+    });
+
+    dropzones.forEach(zone => {
+      zone.addEventListener('dragover', e => {
+        e.preventDefault();
+        zone.classList.add('over');
+      });
+
+      zone.addEventListener('dragleave', () => {
+        zone.classList.remove('over');
+      });
+
+      zone.addEventListener('drop', e => {
+        e.preventDefault();
+        zone.classList.remove('over');
+        const imgUrl = e.dataTransfer.getData('text/plain');
+        zone.innerHTML = `<img src="${imgUrl}" alt="Dropped Button">`;
+      });
+    });
+  </script>
+</body>
+</html>
